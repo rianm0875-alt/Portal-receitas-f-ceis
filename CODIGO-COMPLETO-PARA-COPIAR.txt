@@ -1,0 +1,1405 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Portal receitas faceis</title>
+    <style>
+:root {
+  --ink: #22201d;
+  --muted: #6f6760;
+  --paper: #fffaf2;
+  --panel: #ffffff;
+  --line: #e8ded2;
+  --tomato: #cf3f2e;
+  --leaf: #2f7d58;
+  --honey: #f0b84b;
+  --shadow: 0 18px 50px rgba(54, 38, 22, 0.14);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: Arial, Helvetica, sans-serif;
+}
+img { display: block; max-width: 100%; }
+button, input, select, textarea { font: inherit; }
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 16px clamp(18px, 4vw, 56px);
+  background: rgba(255, 250, 242, 0.92);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(16px);
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+  font-weight: 800;
+  text-decoration: none;
+}
+.brand-mark {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border-radius: 8px;
+  color: #fff;
+  background: var(--tomato);
+}
+.nav { display: flex; align-items: center; gap: 18px; font-size: 0.95rem; }
+.nav a { color: var(--muted); text-decoration: none; }
+.nav a:hover { color: var(--tomato); }
+
+.hero {
+  min-height: 76vh;
+  display: grid;
+  align-items: end;
+  padding: clamp(72px, 10vw, 140px) clamp(18px, 4vw, 56px) 44px;
+  color: #fff;
+  background:
+    linear-gradient(90deg, rgba(26, 21, 17, 0.78), rgba(26, 21, 17, 0.28)),
+    url("https://images.unsplash.com/photo-1495521821757-a1efb6729352?auto=format&fit=crop&w=1800&q=85") center / cover;
+}
+.hero-copy { width: min(720px, 100%); }
+.eyebrow {
+  margin: 0 0 10px;
+  color: var(--tomato);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+.hero .eyebrow { color: var(--honey); }
+h1, h2, h3, p { margin-top: 0; }
+h1 {
+  max-width: 760px;
+  margin-bottom: 18px;
+  font-size: clamp(2.5rem, 7vw, 5.8rem);
+  line-height: 0.95;
+}
+h2 { margin-bottom: 10px; font-size: clamp(2rem, 4vw, 3.1rem); line-height: 1; }
+h3 { margin-bottom: 10px; }
+.hero p {
+  max-width: 620px;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 1.12rem;
+  line-height: 1.55;
+}
+
+.search-panel {
+  width: min(680px, 100%);
+  margin-top: 28px;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  border-radius: 8px;
+  backdrop-filter: blur(16px);
+}
+.search-panel label {
+  display: block;
+  margin: 0 0 8px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.search-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; }
+.search-row input, .submit-form input, .submit-form select, .submit-form textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.search-row input { min-height: 48px; padding: 0 16px; border-color: transparent; }
+.search-row button, .submit-form button, .recipe-card button, .spotlight-actions a, .spotlight-actions button {
+  min-height: 48px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  background: var(--tomato);
+  cursor: pointer;
+}
+.spotlight-actions a,
+.spotlight-actions button {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.stats div { padding: 26px clamp(18px, 4vw, 56px); background: #fff; }
+.stats strong { display: block; margin-bottom: 5px; font-size: 2rem; }
+.stats span { color: var(--muted); }
+
+.section { padding: clamp(56px, 7vw, 96px) clamp(18px, 4vw, 56px); }
+.section-heading { max-width: 820px; margin-bottom: 28px; }
+.spotlight-section { background: #fffaf2; }
+.spotlight-card {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.82fr) minmax(0, 1fr);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: var(--shadow);
+}
+.spotlight-card img {
+  width: 100%;
+  height: 100%;
+  min-height: 340px;
+  object-fit: cover;
+}
+.spotlight-copy {
+  display: grid;
+  align-content: center;
+  padding: clamp(26px, 5vw, 56px);
+}
+.spotlight-copy p {
+  color: var(--muted);
+  line-height: 1.6;
+}
+.spotlight-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  margin-top: 12px;
+}
+.spotlight-actions span {
+  color: var(--leaf);
+  font-weight: 800;
+}
+.carousel-section {
+  background: #fff;
+  border-block: 1px solid var(--line);
+}
+.carousel-shell {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+}
+.carousel-track {
+  display: grid;
+  grid-auto-columns: minmax(230px, 31%);
+  grid-auto-flow: column;
+  gap: 14px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  padding: 4px 2px 14px;
+}
+.carousel-item {
+  position: relative;
+  min-height: 280px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  background: #222;
+  cursor: pointer;
+  text-align: left;
+}
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  object-fit: cover;
+  transition: transform 180ms ease;
+}
+.carousel-item:hover img {
+  transform: scale(1.04);
+}
+.carousel-caption {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 54px 16px 16px;
+  background: linear-gradient(0deg, rgba(20, 16, 12, 0.82), rgba(20, 16, 12, 0));
+}
+.carousel-caption strong {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 1.05rem;
+}
+.carousel-caption span {
+  color: rgba(255, 255, 255, 0.82);
+}
+.carousel-control {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  background: #fff;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+.category-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.category-card {
+  min-height: 130px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+}
+.category-title-button {
+  display: block;
+  margin: 0 0 8px;
+  padding: 0;
+  border: 0;
+  color: var(--ink);
+  background: transparent;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 800;
+  text-align: left;
+}
+.category-card span { color: var(--muted); line-height: 1.45; }
+.category-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+.category-actions button {
+  min-height: 32px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--muted);
+  background: #fffaf2;
+  cursor: pointer;
+}
+.category-actions button:hover {
+  color: #fff;
+  border-color: var(--leaf);
+  background: var(--leaf);
+}
+.category-actions button.active {
+  color: #fff;
+  border-color: var(--tomato);
+  background: var(--tomato);
+}
+
+.recipes-section { background: #fff; border-block: 1px solid var(--line); }
+.toolbar { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
+.filter {
+  min-height: 40px;
+  padding: 0 15px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  background: #fff;
+  cursor: pointer;
+}
+.filter.active { color: #fff; border-color: var(--leaf); background: var(--leaf); }
+.smart-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 14px;
+  margin-bottom: 24px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fffaf2;
+}
+.smart-filters label {
+  display: grid;
+  gap: 6px;
+  min-width: 160px;
+  color: var(--muted);
+  font-weight: 800;
+}
+.smart-filters select {
+  min-height: 42px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  background: #fff;
+}
+.smart-filters span {
+  margin-left: auto;
+  color: var(--muted);
+  font-weight: 800;
+}
+.clear-topic {
+  min-height: 42px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--muted);
+  background: #fff;
+  cursor: pointer;
+}
+.clear-topic:hover {
+  color: #fff;
+  border-color: var(--tomato);
+  background: var(--tomato);
+}
+.recipe-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.recipe-card {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 10px 26px rgba(35, 27, 19, 0.08);
+}
+.recipe-card img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.recipe-card-content { padding: 18px; }
+.recipe-card h3 { font-size: 1.22rem; }
+.recipe-card p { min-height: 52px; color: var(--muted); line-height: 1.45; }
+.card-actions {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+}
+.recipe-card .favorite-button {
+  min-width: 112px;
+  color: var(--tomato);
+  border: 1px solid var(--line);
+  background: #fff;
+}
+.recipe-card .favorite-button.active {
+  color: #fff;
+  border-color: var(--tomato);
+  background: var(--tomato);
+}
+.meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+.meta span, .detail-meta span {
+  padding: 7px 9px;
+  border-radius: 8px;
+  background: #f6efe6;
+  color: #5a4a3f;
+  font-size: 0.86rem;
+}
+
+.recipe-detail {
+  position: fixed;
+  inset: 0 0 0 auto;
+  z-index: 40;
+  width: min(540px, 100%);
+  overflow-y: auto;
+  background: #fff;
+  box-shadow: var(--shadow);
+  transform: translateX(105%);
+  transition: transform 180ms ease;
+}
+.recipe-detail.open { transform: translateX(0); }
+.close-detail {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 0;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+}
+.recipe-detail img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+.detail-body { padding: 28px; }
+.detail-body p, .detail-body li { color: var(--muted); line-height: 1.55; }
+.detail-meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 24px; }
+
+.favorites-section {
+  background: #fffaf2;
+}
+.favorites-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+.favorite-item,
+.menu-grid article {
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+.favorite-item strong,
+.menu-grid strong {
+  display: block;
+  margin-bottom: 6px;
+}
+.favorite-item span,
+.menu-grid span,
+.empty {
+  color: var(--muted);
+}
+.menu-section {
+  background: #fff;
+}
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+.menu-grid span {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.86rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.submit-section {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(320px, 0.7fr);
+  gap: 32px;
+  align-items: start;
+}
+.submit-copy p { color: var(--muted); line-height: 1.6; }
+.submit-form {
+  display: grid;
+  gap: 14px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+.submit-form label { display: grid; gap: 7px; color: var(--muted); font-weight: 700; }
+.submit-form input, .submit-form select, .submit-form textarea {
+  padding: 12px 13px;
+  color: var(--ink);
+  resize: vertical;
+}
+.footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 24px clamp(18px, 4vw, 56px);
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+}
+.footer span:first-child { color: var(--ink); font-weight: 800; }
+
+@media (max-width: 900px) {
+  .category-grid, .recipe-grid, .submit-section, .favorites-list, .menu-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .spotlight-card { grid-template-columns: 1fr; }
+}
+@media (max-width: 680px) {
+  .topbar, .footer { align-items: flex-start; flex-direction: column; }
+  .nav { width: 100%; justify-content: space-between; gap: 10px; font-size: 0.9rem; }
+  .hero { min-height: 72vh; padding-top: 88px; }
+  .search-row, .stats, .category-grid, .recipe-grid, .submit-section, .favorites-list, .menu-grid, .card-actions { grid-template-columns: 1fr; }
+  .smart-filters span { margin-left: 0; }
+  .carousel-shell { grid-template-columns: 1fr; }
+  .carousel-control { display: none; }
+  .carousel-track { grid-auto-columns: 82%; }
+}
+
+</style>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Portal receitas faceis inicio">
+        <span class="brand-mark">P</span>
+        <span>Portal receitas faceis</span>
+      </a>
+      <nav class="nav" aria-label="Navegacao principal">
+        <a href="#receitas">Receitas</a>
+        <a href="#categorias">Categorias</a>
+        <a href="#favoritas">Favoritas</a>
+        <a href="#enviar">Enviar receita</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Do cafe da manha ao jantar especial</p>
+          <h1 id="hero-title">Todas as receitas em um lugar so.</h1>
+          <p>Encontre pratos doces, salgados, rapidos, saudaveis, veganos, brasileiros e receitas para datas especiais.</p>
+          <form class="search-panel" id="searchForm" role="search">
+            <label for="searchInput">Buscar receita</label>
+            <div class="search-row">
+              <input id="searchInput" type="search" placeholder="Ex.: bolo, massa, frango, vegano">
+              <button type="submit">Buscar</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section class="stats" aria-label="Resumo do site">
+        <div><strong id="totalRecipes">150</strong><span>receitas no acervo</span></div>
+        <div><strong>12</strong><span>categorias principais</span></div>
+        <div><strong>15 min</strong><span>receitas rapidas</span></div>
+      </section>
+
+      <section class="section spotlight-section" aria-labelledby="spotlight-title">
+        <div class="spotlight-card">
+          <img id="dailyImage" src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1000&q=85" alt="">
+          <div class="spotlight-copy">
+            <p class="eyebrow">Receita do dia</p>
+            <h2 id="spotlight-title">Receita especial de hoje</h2>
+            <p id="dailyDescription">Todo dia uma receita diferente aparece aqui automaticamente.</p>
+            <div class="spotlight-actions">
+              <button id="dailyButton" type="button">Ver receita de hoje</button>
+              <span id="dailyMeta">Atualiza sozinha</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section carousel-section" aria-labelledby="carousel-title">
+        <div class="section-heading">
+          <p class="eyebrow">Galeria</p>
+          <h2 id="carousel-title">Pratos para explorar</h2>
+        </div>
+        <div class="carousel-shell">
+          <button class="carousel-control" id="carouselPrev" type="button" aria-label="Imagem anterior">&lsaquo;</button>
+          <div class="carousel-track" id="carouselTrack" tabindex="0" aria-label="Carrossel de receitas"></div>
+          <button class="carousel-control" id="carouselNext" type="button" aria-label="Proxima imagem">&rsaquo;</button>
+        </div>
+      </section>
+
+      <section class="section" id="categorias" aria-labelledby="category-title">
+        <div class="section-heading">
+          <p class="eyebrow">Organizacao</p>
+          <h2 id="category-title">Tipos de receitas</h2>
+        </div>
+        <div class="category-grid" id="categoryGrid"></div>
+      </section>
+
+      <section class="section recipes-section" id="receitas" aria-labelledby="recipes-title">
+        <div class="section-heading">
+          <p class="eyebrow">Catalogo</p>
+          <h2 id="recipes-title">Receitas em destaque</h2>
+        </div>
+        <div class="toolbar" aria-label="Filtros de receitas">
+          <button class="filter active" data-filter="Todas" type="button">Todas</button>
+          <button class="filter" data-filter="Cafe da manha" type="button">Cafe</button>
+          <button class="filter" data-filter="Almoco" type="button">Almoco</button>
+          <button class="filter" data-filter="Jantar" type="button">Jantar</button>
+          <button class="filter" data-filter="Doces" type="button">Doces</button>
+          <button class="filter" data-filter="Veganas" type="button">Veganas</button>
+          <button class="filter" data-filter="Rapidas" type="button">Rapidas</button>
+          <button class="filter" data-filter="Fitness" type="button">Fitness</button>
+          <button class="filter" data-filter="Bebidas" type="button">Bebidas</button>
+          <button class="filter" data-filter="Brasileiras" type="button">Brasileiras</button>
+          <button class="filter" data-filter="Internacionais" type="button">Internacionais</button>
+          <button class="filter" data-filter="Infantis" type="button">Infantis</button>
+          <button class="filter" data-filter="Datas especiais" type="button">Datas especiais</button>
+        </div>
+        <div class="smart-filters" aria-label="Filtros avancados">
+          <label>
+            Tempo
+            <select id="timeFilter">
+              <option value="Todos">Todos</option>
+              <option value="Rapido">Ate 25 min</option>
+              <option value="Medio">Ate 45 min</option>
+              <option value="Longo">Mais elaboradas</option>
+            </select>
+          </label>
+          <label>
+            Dificuldade
+            <select id="levelFilter">
+              <option value="Todas">Todas</option>
+              <option value="Facil">Facil</option>
+              <option value="Medio">Medio</option>
+            </select>
+          </label>
+          <button class="clear-topic" id="clearTopic" type="button">Limpar topico</button>
+          <span id="recipeCount"></span>
+        </div>
+        <div class="recipe-grid" id="recipeGrid"></div>
+      </section>
+
+      <section class="section favorites-section" id="favoritas" aria-labelledby="favorites-title">
+        <div class="section-heading">
+          <p class="eyebrow">Sua selecao</p>
+          <h2 id="favorites-title">Receitas favoritas</h2>
+        </div>
+        <div class="favorites-list" id="favoritesList"></div>
+      </section>
+
+      <section class="section menu-section" aria-labelledby="menu-title">
+        <div class="section-heading">
+          <p class="eyebrow">Inspiracao</p>
+          <h2 id="menu-title">Cardapio sugerido</h2>
+        </div>
+        <div class="menu-grid">
+          <article><span>Segunda</span><strong>Frango grelhado com salada</strong></article>
+          <article><span>Terca</span><strong>Macarrao alho e oleo</strong></article>
+          <article><span>Quarta</span><strong>Moqueca de banana-da-terra</strong></article>
+          <article><span>Quinta</span><strong>Risoto de cogumelos</strong></article>
+          <article><span>Sexta</span><strong>Bolo de chocolate</strong></article>
+        </div>
+      </section>
+
+      <aside class="recipe-detail" id="recipeDetail" aria-live="polite">
+        <button class="close-detail" id="closeDetail" type="button" aria-label="Fechar detalhes">x</button>
+        <img id="detailImage" alt="">
+        <div class="detail-body">
+          <p class="eyebrow" id="detailCategory"></p>
+          <h2 id="detailTitle"></h2>
+          <p id="detailDescription"></p>
+          <div class="detail-meta">
+            <span id="detailTime"></span>
+            <span id="detailLevel"></span>
+            <span id="detailServings"></span>
+          </div>
+          <h3>Ingredientes</h3>
+          <ul id="detailIngredients"></ul>
+          <h3>Modo de preparo</h3>
+          <ol id="detailSteps"></ol>
+        </div>
+      </aside>
+
+      <section class="section submit-section" id="enviar" aria-labelledby="submit-title">
+        <div class="submit-copy">
+          <p class="eyebrow">Comunidade</p>
+          <h2 id="submit-title">Cadastre novas receitas no acervo</h2>
+          <p>A estrutura ja esta pronta para crescer: voce pode adicionar receitas brasileiras, internacionais, fitness, infantis, sobremesas, bebidas e cardapios completos.</p>
+        </div>
+        <form class="submit-form">
+          <label>Nome da receita<input type="text" placeholder="Ex.: Lasanha de domingo"></label>
+          <label>Categoria<select><option>Cafe da manha</option><option>Almoco</option><option>Jantar</option><option>Doces</option><option>Veganas</option><option>Bebidas</option></select></label>
+          <label>Descricao curta<textarea rows="4" placeholder="Conte o que torna essa receita especial"></textarea></label>
+          <button type="button">Salvar rascunho</button>
+        </form>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Portal receitas faceis</span>
+      <span>Um catalogo flexivel para todos os tipos de receitas.</span>
+    </footer>
+
+    <script>
+const imageByCategory = {
+  "Cafe da manha": "https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=900&q=80",
+  "Almoco": "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=80",
+  "Jantar": "https://images.unsplash.com/photo-1476124369491-e7addf5db371?auto=format&fit=crop&w=900&q=80",
+  "Doces": "https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&fit=crop&w=900&q=80",
+  "Veganas": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=80",
+  "Rapidas": "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=900&q=80",
+  "Fitness": "https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=900&q=80",
+  "Bebidas": "https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=900&q=80",
+  "Brasileiras": "https://images.unsplash.com/photo-1625938145744-e38051539998?auto=format&fit=crop&w=900&q=80",
+  "Internacionais": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=80",
+  "Infantis": "https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=900&q=80",
+  "Datas especiais": "https://images.unsplash.com/photo-1481931098730-318b6f776db0?auto=format&fit=crop&w=900&q=80"
+};
+
+const imageKeywords = [
+  ["pao de queijo", "cheese bread"],
+  ["pao integral", "whole wheat bread"],
+  ["pao caseiro", "homemade bread"],
+  ["panqueca de carne", "savory meat pancake"],
+  ["escondidinho de mandioca", "cassava casserole"],
+  ["feijoada simples", "feijoada"],
+  ["bolo de chocolate", "chocolate cake"],
+  ["bolo de cenoura", "carrot cake"],
+  ["bolo de fuba", "cornmeal cake"],
+  ["arroz de forno", "baked rice casserole"],
+  ["frango grelhado", "grilled chicken"],
+  ["frango a parmegiana", "chicken parmesan"],
+  ["strogonoff de frango", "chicken stroganoff"],
+  ["strogonoff de carne", "beef stroganoff"],
+  ["lasanha bolonhesa", "lasagna bolognese"],
+  ["lasanha de frango", "chicken lasagna"],
+  ["pizza caseira", "homemade pizza"],
+  ["macarrao a bolonhesa", "spaghetti bolognese"],
+  ["macarrao quatro queijos", "cheese pasta"],
+  ["mousse de chocolate", "chocolate mousse"],
+  ["torta de limao", "lemon pie"],
+  ["torta de morango", "strawberry tart"],
+  ["hamburguer de grao-de-bico", "chickpea burger"],
+  ["curry de grao-de-bico", "chickpea curry"],
+  ["lasanha vegana", "vegan lasagna"],
+  ["feijoada vegana", "vegan bean stew"],
+  ["lasanha", "lasagna"],
+  ["pao", "bread"],
+  ["bolo", "cake"],
+  ["brigadeiro", "chocolate dessert"],
+  ["pudim", "flan dessert"],
+  ["mousse", "mousse dessert"],
+  ["torta", "pie dessert"],
+  ["brownie", "brownie"],
+  ["cookie", "cookies"],
+  ["pave", "layered dessert"],
+  ["chocolate", "chocolate dessert"],
+  ["arroz", "rice dish"],
+  ["feijao", "beans stew"],
+  ["frango", "chicken dish"],
+  ["bife", "steak"],
+  ["carne", "beef stew"],
+  ["peixe", "fish dish"],
+  ["tilapia", "grilled fish"],
+  ["salada", "salad"],
+  ["batata", "potato dish"],
+  ["pure", "mashed potato"],
+  ["risoto", "risotto"],
+  ["sopa", "soup"],
+  ["caldo", "soup"],
+  ["pizza", "pizza"],
+  ["escondidinho", "casserole"],
+  ["torta salgada", "savory pie"],
+  ["quiche", "quiche"],
+  ["empadao", "chicken pot pie"],
+  ["macarrao", "pasta"],
+  ["nhoque", "gnocchi"],
+  ["ravioli", "ravioli"],
+  ["panqueca", "pancakes"],
+  ["omelete", "omelette"],
+  ["tapioca", "tapioca"],
+  ["cuscuz", "couscous"],
+  ["sanduiche", "sandwich"],
+  ["wrap", "wrap sandwich"],
+  ["hamburguer", "burger"],
+  ["tofu", "tofu bowl"],
+  ["lentilha", "lentil stew"],
+  ["grao-de-bico", "chickpea"],
+  ["cogumelos", "mushrooms"],
+  ["curry", "vegetable curry"],
+  ["falafel", "falafel"],
+  ["quinoa", "quinoa salad"],
+  ["berinjela", "eggplant dish"],
+  ["abobrinha", "zucchini"],
+  ["moqueca", "brazilian stew"],
+  ["suco", "fresh juice"],
+  ["vitamina", "smoothie"],
+  ["smoothie", "smoothie"],
+  ["cafe", "coffee"],
+  ["cha", "tea"],
+  ["limonada", "lemonade"],
+  ["drink", "mocktail"],
+  ["feijoada", "feijoada"],
+  ["farofa", "brazilian farofa"],
+  ["vinagrete", "tomato salsa"],
+  ["carbonara", "carbonara"],
+  ["taco", "tacos"],
+  ["yakissoba", "yakisoba"],
+  ["homus", "hummus"],
+  ["guacamole", "guacamole"],
+  ["nuggets", "chicken nuggets"],
+  ["bolinho", "fritters"],
+  ["geladinho", "fruit popsicle"],
+  ["peru", "roast turkey"],
+  ["bacalhau", "cod fish"],
+  ["rabanada", "french toast"],
+  ["canjica", "corn pudding"],
+  ["pamonha", "corn tamale"],
+  ["costela", "bbq ribs"],
+  ["churrasco", "barbecue"],
+  ["lentilha de ano novo", "lentil stew"]
+];
+
+const customRecipeImages = {
+  "Pao caseiro simples": "assets/pao-caseiro.jpg",
+  "Pao integral de forma": "assets/pao-caseiro.jpg",
+  "Panqueca de carne": "assets/panqueca-carne.jpg",
+  "Escondidinho de mandioca": "assets/escondidinho-mandioca.jpg",
+  "Feijoada simples": "assets/feijoada.jpg"
+};
+
+const fixedImageByTerm = {
+  "pao de queijo": "https://commons.wikimedia.org/wiki/Special:FilePath/P%C3%A3o_de_queijo.jpg",
+  "pao integral": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=900&q=85",
+  "pao caseiro": "assets/pao-caseiro.jpg",
+  "panqueca de carne": "assets/panqueca-carne.jpg",
+  "escondidinho de mandioca": "assets/escondidinho-mandioca.jpg",
+  "feijoada simples": "assets/feijoada.jpg",
+  "bolo de chocolate": "https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&fit=crop&w=900&q=85",
+  "bolo de cenoura": "https://images.unsplash.com/photo-1621303837174-89787a7d4729?auto=format&fit=crop&w=900&q=85",
+  "bolo de fuba": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=85",
+  "arroz de forno": "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=900&q=85",
+  "frango grelhado": "https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=900&q=85",
+  "frango a parmegiana": "https://images.unsplash.com/photo-1632778149955-e80f8ceca2e8?auto=format&fit=crop&w=900&q=85",
+  "strogonoff de frango": "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=900&q=85",
+  "strogonoff de carne": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=900&q=85",
+  "lasanha bolonhesa": "https://images.unsplash.com/photo-1619895092538-128341789043?auto=format&fit=crop&w=900&q=85",
+  "lasanha de frango": "https://images.unsplash.com/photo-1619895092538-128341789043?auto=format&fit=crop&w=900&q=85",
+  "pizza caseira": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=85",
+  "macarrao a bolonhesa": "https://images.unsplash.com/photo-1551892374-ecf8754cf8b0?auto=format&fit=crop&w=900&q=85",
+  "macarrao quatro queijos": "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=900&q=85",
+  "mousse de chocolate": "https://images.unsplash.com/photo-1488477304112-4944851de03d?auto=format&fit=crop&w=900&q=85",
+  "torta de limao": "https://images.unsplash.com/photo-1519915028121-7d3463d20b13?auto=format&fit=crop&w=900&q=85",
+  "torta de morango": "https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?auto=format&fit=crop&w=900&q=85",
+  "hamburguer de grao-de-bico": "https://images.unsplash.com/photo-1520072959219-c595dc870360?auto=format&fit=crop&w=900&q=85",
+  "curry de grao-de-bico": "https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?auto=format&fit=crop&w=900&q=85",
+  "lasanha vegana": "https://images.unsplash.com/photo-1619895092538-128341789043?auto=format&fit=crop&w=900&q=85",
+  "feijoada vegana": "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=85",
+  "pao": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=900&q=85",
+  "panqueca": "https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=900&q=85",
+  "omelete": "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=900&q=85",
+  "tapioca": "https://images.unsplash.com/photo-1565299507177-b0ac66763828?auto=format&fit=crop&w=900&q=85",
+  "arroz": "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=900&q=85",
+  "feijao": "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=85",
+  "frango": "https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=900&q=85",
+  "bife": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=900&q=85",
+  "carne": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=900&q=85",
+  "peixe": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=900&q=85",
+  "tilapia": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=900&q=85",
+  "salada": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=85",
+  "batata": "https://images.unsplash.com/photo-1518013431117-eb1465fa5752?auto=format&fit=crop&w=900&q=85",
+  "lasanha": "https://images.unsplash.com/photo-1619895092538-128341789043?auto=format&fit=crop&w=900&q=85",
+  "risoto": "https://images.unsplash.com/photo-1476124369491-e7addf5db371?auto=format&fit=crop&w=900&q=85",
+  "sopa": "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=85",
+  "caldo": "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=85",
+  "pizza": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=85",
+  "escondidinho": "assets/escondidinho-mandioca.jpg",
+  "macarrao": "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=900&q=85",
+  "nhoque": "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=900&q=85",
+  "ravioli": "https://images.unsplash.com/photo-1587740908075-9e245070dfaa?auto=format&fit=crop&w=900&q=85",
+  "bolo": "https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&fit=crop&w=900&q=85",
+  "brigadeiro": "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=900&q=85",
+  "pudim": "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=900&q=85",
+  "mousse": "https://images.unsplash.com/photo-1488477304112-4944851de03d?auto=format&fit=crop&w=900&q=85",
+  "torta": "https://images.unsplash.com/photo-1519915028121-7d3463d20b13?auto=format&fit=crop&w=900&q=85",
+  "brownie": "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=900&q=85",
+  "cookie": "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=900&q=85",
+  "chocolate": "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=900&q=85",
+  "tofu": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=85",
+  "lentilha": "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=85",
+  "grao-de-bico": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=85",
+  "curry": "https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?auto=format&fit=crop&w=900&q=85",
+  "suco": "https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=900&q=85",
+  "vitamina": "https://images.unsplash.com/photo-1505252585461-04db1eb84625?auto=format&fit=crop&w=900&q=85",
+  "cafe": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=85",
+  "cha": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=900&q=85",
+  "limonada": "https://images.unsplash.com/photo-1523371683702-9d1ce6b7142f?auto=format&fit=crop&w=900&q=85",
+  "drink": "https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=900&q=85",
+  "feijoada": "assets/feijoada.jpg",
+  "carbonara": "https://images.unsplash.com/photo-1612874742237-6526221588e3?auto=format&fit=crop&w=900&q=85",
+  "taco": "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=900&q=85",
+  "yakissoba": "https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?auto=format&fit=crop&w=900&q=85",
+  "homus": "https://images.unsplash.com/photo-1541014741259-de529411b96a?auto=format&fit=crop&w=900&q=85",
+  "guacamole": "https://images.unsplash.com/photo-1604909052743-94e838986d24?auto=format&fit=crop&w=900&q=85"
+};
+
+const topicAliases = {
+  "Pao": ["pao", "farinha", "fermento", "polvilho"],
+  "Panqueca": ["panqueca"],
+  "Omelete": ["omelete", "ovos"],
+  "Tapioca": ["tapioca", "goma"],
+  "Aveia": ["aveia", "mingau", "overnight", "granola"],
+  "Arroz": ["arroz"],
+  "Feijao": ["feijao", "tropeiro", "caldo"],
+  "Frango": ["frango", "galinha", "canja"],
+  "Carne": ["carne", "bife", "picadinho", "costela"],
+  "Peixe": ["peixe", "tilapia", "bacalhau"],
+  "Strogonoff": ["strogonoff", "creme", "champignon"],
+  "Salada": ["salada", "folhas", "grao-de-bico", "quinoa"],
+  "Lasanha": ["lasanha"],
+  "Risoto": ["risoto", "arroz arborio"],
+  "Sopa": ["sopa", "caldo", "creme"],
+  "Pizza": ["pizza"],
+  "Nhoque": ["nhoque"],
+  "Escondidinho": ["escondidinho", "pure"],
+  "Bolo": ["bolo", "cupcake"],
+  "Brigadeiro": ["brigadeiro", "beijinho", "cajuzinho"],
+  "Pudim": ["pudim"],
+  "Torta": ["torta", "cheesecake", "pavlova"],
+  "Brownie": ["brownie", "cookie", "palha italiana"],
+  "Mousse": ["mousse"],
+  "Moqueca": ["moqueca"],
+  "Cogumelos": ["cogumelos", "champignon"],
+  "Lentilha": ["lentilha"],
+  "Tofu": ["tofu"],
+  "Grao-de-bico": ["grao-de-bico", "grao", "falafel", "homus"],
+  "Curry": ["curry"],
+  "Macarrao": ["macarrao", "massa", "spaghetti", "carbonara"],
+  "Sanduiche": ["sanduiche", "wrap", "pao recheado"],
+  "Cuscuz": ["cuscuz", "flocao"],
+  "Ovos": ["ovos", "omelete", "mexidos"],
+  "Uma panela": ["uma panela", "frigideira", "arroz de uma panela"],
+  "Proteico": ["proteico", "proteina", "frango", "peixe"],
+  "Crepioca": ["crepioca"],
+  "Quinoa": ["quinoa"],
+  "Suco": ["suco"],
+  "Vitamina": ["vitamina", "smoothie"],
+  "Cafe": ["cafe"],
+  "Cha": ["cha"],
+  "Limonada": ["limonada"],
+  "Drink": ["drink", "agua saborizada"],
+  "Feijoada": ["feijoada"],
+  "Galinhada": ["galinhada"],
+  "Pao de queijo": ["pao de queijo"],
+  "Farofa": ["farofa"],
+  "Carbonara": ["carbonara", "spaghetti"],
+  "Taco": ["taco", "chili", "guacamole"],
+  "Yakissoba": ["yakissoba", "xadrez", "arroz frito"],
+  "Homus": ["homus", "kibe", "tabule"],
+  "Guacamole": ["guacamole"],
+  "Mini pizza": ["mini pizza", "pizza"],
+  "Nuggets": ["nuggets"],
+  "Bolinho": ["bolinho"],
+  "Geladinho": ["geladinho"],
+  "Biscoito": ["biscoito"],
+  "Dia dos Namorados": ["dia dos namorados", "namorados"],
+  "Dia das Maes": ["dia das maes", "maes"],
+  "Dia dos Pais": ["dia dos pais", "pais"],
+  "Pascoa": ["pascoa"],
+  "Natal": ["natal", "peru", "rabanada", "tender"],
+  "Ano Novo": ["ano novo", "lentilha"],
+  "Festa Junina": ["festa junina", "canjica", "pamonha", "milho"],
+  "Carnaval": ["carnaval"],
+  "Aniversario": ["aniversario", "salgadinhos", "docinhos"],
+  "Halloween": ["halloween"]
+};
+
+function getImageForRecipe(title, category) {
+  if (customRecipeImages[title]) return customRecipeImages[title];
+  return makeRecipeCardImage(title, category);
+}
+
+function makeRecipeCardImage(title, category) {
+  const colors = {
+    "Cafe da manha": ["#d88c2f", "#fff0c2"],
+    "Almoco": ["#2f7d58", "#dff5df"],
+    "Jantar": ["#4d4f8f", "#e6e8ff"],
+    "Doces": ["#8b315b", "#ffe1ef"],
+    "Veganas": ["#2f7d58", "#d6f5df"],
+    "Rapidas": ["#cf3f2e", "#ffe0d8"],
+    "Fitness": ["#28706a", "#dcfff6"],
+    "Bebidas": ["#2f73a8", "#d9f0ff"],
+    "Brasileiras": ["#5b7f2c", "#f3ffd8"],
+    "Internacionais": ["#7d4d2f", "#ffe8d8"],
+    "Infantis": ["#c05283", "#ffe5f0"],
+    "Datas especiais": ["#8b315b", "#fff0d6"]
+  };
+  const [dark, light] = colors[category] || ["#555", "#eee"];
+  const safeTitle = title.replace(/&/g, "e").replace(/</g, "").replace(/>/g, "");
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="900" height="700" viewBox="0 0 900 700">
+      <defs>
+        <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="${light}"/>
+          <stop offset="100%" stop-color="${dark}"/>
+        </linearGradient>
+      </defs>
+      <rect width="900" height="700" fill="url(#bg)"/>
+      <circle cx="450" cy="310" r="180" fill="#fff" opacity="0.86"/>
+      <circle cx="450" cy="310" r="125" fill="${light}" opacity="0.95"/>
+      <path d="M270 530 C360 585 540 585 630 530" fill="none" stroke="#fff" stroke-width="32" stroke-linecap="round" opacity="0.75"/>
+      <text x="450" y="312" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="800" fill="${dark}">Prato pronto</text>
+      <text x="450" y="405" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="800" fill="#231b17">${safeTitle}</text>
+      <text x="450" y="468" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="26" fill="#4f453d">${category}</text>
+    </svg>
+  `;
+  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+}
+
+const categories = [
+  ["Cafe da manha", "Panquecas, paes, vitaminas, ovos e opcoes para comecar o dia.", ["Pao", "Panqueca", "Omelete", "Tapioca", "Aveia"]],
+  ["Almoco", "Pratos completos, massas, carnes, saladas e acompanhamentos.", ["Arroz", "Feijao", "Frango", "Carne", "Peixe", "Strogonoff", "Salada"]],
+  ["Jantar", "Receitas leves, especiais ou confortaveis para fechar o dia.", ["Lasanha", "Risoto", "Sopa", "Pizza", "Nhoque", "Escondidinho"]],
+  ["Doces", "Bolos, tortas, sobremesas geladas, chocolates e confeitaria.", ["Bolo", "Brigadeiro", "Pudim", "Torta", "Brownie", "Mousse"]],
+  ["Veganas", "Pratos sem ingredientes de origem animal, com muito sabor.", ["Moqueca", "Cogumelos", "Lentilha", "Tofu", "Grao-de-bico", "Curry"]],
+  ["Rapidas", "Ideias praticas para quando o tempo esta curto.", ["Macarrao", "Sanduiche", "Cuscuz", "Ovos", "Uma panela"]],
+  ["Fitness", "Receitas equilibradas, proteicas e boas para rotina.", ["Proteico", "Crepioca", "Quinoa", "Peixe", "Aveia"]],
+  ["Bebidas", "Sucos, cafes, drinks sem alcool, chas e refrescos.", ["Suco", "Vitamina", "Cafe", "Cha", "Limonada", "Drink"]],
+  ["Brasileiras", "Classicos regionais, comida caseira e pratos de familia.", ["Feijoada", "Moqueca", "Galinhada", "Pao de queijo", "Farofa"]],
+  ["Internacionais", "Sabores italianos, mexicanos, asiaticos, arabes e mais.", ["Carbonara", "Taco", "Yakissoba", "Homus", "Guacamole"]],
+  ["Infantis", "Pratos coloridos, nutritivos e faceis de comer.", ["Mini pizza", "Nuggets", "Bolinho", "Geladinho", "Biscoito"]],
+  ["Datas especiais", "Receitas para feriados, festas e momentos comemorativos do ano.", ["Dia dos Namorados", "Dia das Maes", "Dia dos Pais", "Pascoa", "Natal", "Ano Novo", "Festa Junina", "Carnaval", "Aniversario", "Halloween"]]
+];
+
+const recipeFamilies = [
+  ["Cafe da manha", ["Pao caseiro simples", "Pao integral de forma", "Pao de queijo facil"], ["farinha ou polvilho", "fermento", "agua ou leite", "sal", "oleo"], 90, "Medio"],
+  ["Cafe da manha", ["Panqueca de banana", "Panqueca americana", "Panqueca de aveia"], ["banana ou farinha", "ovos", "leite", "fermento", "canela"], 20, "Facil"],
+  ["Cafe da manha", ["Omelete de queijo", "Omelete de legumes", "Omelete de forno"], ["ovos", "sal", "queijo", "legumes picados", "azeite"], 18, "Facil"],
+  ["Cafe da manha", ["Tapioca com queijo", "Tapioca de frango", "Tapioca doce com coco"], ["goma de tapioca", "recheio escolhido", "sal", "manteiga"], 12, "Facil"],
+  ["Cafe da manha", ["Mingau de aveia", "Overnight oats", "Iogurte com granola"], ["aveia", "leite ou iogurte", "fruta", "mel", "canela"], 10, "Facil"],
+  ["Cafe da manha", ["Pao frances recheado", "Croissant simples", "Torrada com ovos"], ["pao", "ovos", "queijo", "manteiga", "temperos"], 20, "Facil"],
+  ["Cafe da manha", ["Cuscuz com queijo", "Crepioca de queijo", "Vitamina de morango"], ["base do cafe", "leite ou agua", "queijo", "fruta", "sal ou mel"], 15, "Facil"],
+  ["Cafe da manha", ["Waffle caseiro", "Granola com frutas", "Pao na chapa"], ["farinha ou pao", "leite", "ovos", "frutas", "manteiga"], 25, "Facil"],
+  ["Almoco", ["Arroz soltinho", "Arroz com legumes", "Arroz de forno"], ["arroz", "alho", "cebola", "agua quente", "sal"], 30, "Facil"],
+  ["Almoco", ["Feijao temperado", "Feijao tropeiro", "Caldo de feijao"], ["feijao cozido", "alho", "cebola", "louro", "cheiro-verde"], 45, "Facil"],
+  ["Almoco", ["Frango grelhado", "Frango ensopado", "Frango ao creme de milho"], ["frango", "alho", "limao", "sal", "pimenta"], 35, "Facil"],
+  ["Almoco", ["Bife acebolado", "Carne de panela", "Picadinho com legumes"], ["carne", "cebola", "alho", "tomate", "caldo"], 50, "Medio"],
+  ["Almoco", ["Peixe assado", "Tilapia grelhada", "Peixe ao molho"], ["peixe", "limao", "alho", "sal", "ervas"], 35, "Facil"],
+  ["Almoco", ["Pure de batata", "Batata rustica", "Batata gratinada"], ["batata", "sal", "manteiga", "leite", "queijo"], 35, "Facil"],
+  ["Almoco", ["Salada completa", "Salada de grao-de-bico", "Salada de macarrao"], ["folhas", "tomate", "proteina", "azeite", "limao"], 20, "Facil"],
+  ["Almoco", ["Strogonoff de frango", "Strogonoff de carne", "Strogonoff de palmito"], ["creme", "molho de tomate", "proteina", "cebola", "champignon"], 35, "Facil"],
+  ["Almoco", ["Panqueca de carne", "Panqueca de frango", "Panqueca de ricota"], ["massa de panqueca", "recheio", "molho", "queijo", "oregano"], 45, "Medio"],
+  ["Almoco", ["Escondidinho de mandioca", "Arroz carreteiro", "Frango xadrez simples"], ["base principal", "proteina", "legumes", "alho", "cebola"], 50, "Medio"],
+  ["Almoco", ["Lombo assado", "Carne moida com legumes", "Almondegas ao molho"], ["carne", "molho", "alho", "cebola", "legumes"], 55, "Medio"],
+  ["Almoco", ["Fricasse de frango", "Frango a parmegiana", "File de peixe empanado"], ["proteina", "molho", "queijo", "farinha", "temperos"], 45, "Medio"],
+  ["Almoco", ["Macarrao a bolonhesa", "Macarrao quatro queijos", "Macarrao primavera"], ["massa", "molho", "queijo", "legumes", "ervas"], 35, "Facil"],
+  ["Jantar", ["Lasanha bolonhesa", "Lasanha de frango", "Lasanha de berinjela"], ["massa de lasanha", "molho", "recheio", "queijo", "oregano"], 60, "Medio"],
+  ["Jantar", ["Risoto de cogumelos", "Risoto de frango", "Risoto de limao"], ["arroz arborio", "caldo quente", "cebola", "manteiga", "queijo"], 40, "Medio"],
+  ["Jantar", ["Sopa de legumes", "Caldo verde", "Canja de galinha"], ["legumes", "caldo", "alho", "cebola", "tempero verde"], 35, "Facil"],
+  ["Jantar", ["Pizza de frigideira", "Pizza caseira", "Pizza de pao"], ["massa ou pao", "molho de tomate", "queijo", "recheio", "oregano"], 30, "Facil"],
+  ["Jantar", ["Escondidinho de carne", "Escondidinho de frango", "Escondidinho de legumes"], ["pure", "recheio refogado", "queijo", "cebola", "alho"], 50, "Medio"],
+  ["Jantar", ["Torta salgada de liquidificador", "Quiche de queijo", "Empadao de frango"], ["farinha", "ovos", "leite", "recheio", "fermento"], 50, "Medio"],
+  ["Jantar", ["Nhoque ao sugo", "Nhoque quatro queijos", "Nhoque de batata-doce"], ["nhoque", "molho", "queijo", "sal", "manjericao"], 45, "Medio"],
+  ["Jantar", ["Rondelli de presunto", "Rondelli de frango", "Rondelli de ricota"], ["massa", "recheio", "molho branco", "queijo", "oregano"], 55, "Medio"],
+  ["Jantar", ["Creme de abobora", "Sopa de cebola", "Caldo de mandioca"], ["legume base", "caldo", "alho", "cebola", "creme"], 40, "Facil"],
+  ["Jantar", ["Arroz cremoso de forno", "Macarrao de forno", "Polenta com molho"], ["base cozida", "molho", "queijo", "tempero", "recheio"], 45, "Facil"],
+  ["Jantar", ["Panqueca gratinada", "Canelone de queijo", "Conchiglione recheado"], ["massa", "molho", "recheio", "queijo", "oregano"], 55, "Medio"],
+  ["Jantar", ["File ao molho madeira", "Frango ao molho branco", "Peixe com crosta de ervas"], ["proteina", "molho", "ervas", "manteiga", "sal"], 45, "Medio"],
+  ["Jantar", ["Sufle de legumes", "Frittata de forno", "Legumes gratinados"], ["legumes", "ovos", "queijo", "leite", "temperos"], 40, "Facil"],
+  ["Rapidas", ["Macarrao alho e oleo", "Macarrao ao molho rapido", "Macarrao cremoso"], ["macarrao", "alho", "azeite", "sal", "salsinha"], 20, "Facil"],
+  ["Rapidas", ["Sanduiche natural", "Wrap de frango", "Pao recheado quente"], ["pao ou wrap", "proteina", "folhas", "molho", "queijo"], 15, "Facil"],
+  ["Rapidas", ["Cuscuz simples", "Cuscuz recheado", "Cuscuz com ovo"], ["flocao", "agua", "sal", "manteiga", "recheio"], 15, "Facil"],
+  ["Rapidas", ["Arroz de uma panela", "Frigideira de legumes", "Ovos mexidos cremosos"], ["base pronta", "ovos ou legumes", "sal", "azeite", "temperos"], 18, "Facil"],
+  ["Rapidas", ["Tapioca pizza", "Omelete de micro-ondas", "Macarrao de panela"], ["base rapida", "queijo", "molho", "ovos ou massa", "temperos"], 15, "Facil"],
+  ["Rapidas", ["Salada no pote", "Creme rapido de milho", "Batata de micro-ondas"], ["ingredientes prontos", "legumes", "molho", "sal", "azeite"], 18, "Facil"],
+  ["Rapidas", ["Quesadilla simples", "Pao com ovo especial", "Arroz mexido rapido"], ["pao ou tortilla", "ovo", "queijo", "arroz", "temperos"], 15, "Facil"],
+  ["Doces", ["Bolo de chocolate", "Bolo de cenoura", "Bolo de fuba"], ["farinha", "ovos", "acucar", "oleo", "fermento"], 50, "Facil"],
+  ["Doces", ["Brigadeiro", "Beijinho", "Cajuzinho"], ["leite condensado", "manteiga", "sabor principal", "granulado", "forminhas"], 25, "Facil"],
+  ["Doces", ["Pudim de leite", "Mousse de maracuja", "Gelatina cremosa"], ["leite condensado", "creme de leite", "sabor", "acucar", "agua"], 45, "Facil"],
+  ["Doces", ["Torta de limao", "Torta de morango", "Cheesecake simples"], ["biscoito", "manteiga", "creme", "fruta", "acucar"], 55, "Medio"],
+  ["Doces", ["Brownie", "Cookie com gotas", "Palha italiana"], ["chocolate", "farinha ou biscoito", "manteiga", "acucar", "ovos"], 35, "Facil"],
+  ["Doces", ["Mousse de chocolate", "Mousse de limao", "Mousse de morango"], ["creme de leite", "leite condensado", "sabor principal", "gelatina se precisar", "raspas"], 20, "Facil"],
+  ["Doces", ["Cocada cremosa", "Arroz doce", "Canjica doce"], ["leite", "acucar", "coco ou arroz", "canela", "leite condensado"], 40, "Facil"],
+  ["Doces", ["Cupcake de baunilha", "Cupcake de chocolate", "Cupcake recheado"], ["farinha", "ovos", "acucar", "manteiga", "cobertura"], 45, "Medio"],
+  ["Doces", ["Trufa de chocolate", "Bombom de morango", "Pavlova simples"], ["chocolate ou fruta", "creme", "acucar", "baunilha", "decoracao"], 50, "Medio"],
+  ["Doces", ["Bolo gelado", "Bolo prestigio", "Bolo vulcao"], ["massa de bolo", "recheio", "cobertura", "chocolate", "coco"], 60, "Medio"],
+  ["Doces", ["Petit gateau", "Banoffee", "Tiramisu simples"], ["chocolate ou creme", "biscoito", "fruta", "acucar", "manteiga"], 50, "Medio"],
+  ["Doces", ["Sorvete caseiro", "Picole de fruta", "Creme de papaia"], ["fruta", "creme", "leite", "acucar", "gelo"], 25, "Facil"],
+  ["Veganas", ["Moqueca de banana-da-terra", "Estrogonofe de cogumelos", "Lentilha cremosa"], ["vegetal principal", "alho", "cebola", "leite vegetal ou caldo", "ervas"], 35, "Facil"],
+  ["Veganas", ["Hamburguer de grao-de-bico", "Bolinho de lentilha", "Almondega de feijao"], ["leguminosa cozida", "farinha", "cebola", "alho", "temperos"], 35, "Facil"],
+  ["Veganas", ["Macarrao com pesto vegano", "Arroz com tofu", "Legumes ao curry"], ["massa ou arroz", "proteina vegetal", "legumes", "molho", "ervas"], 30, "Facil"],
+  ["Veganas", ["Curry de grao-de-bico", "Curry de legumes", "Curry de abobora"], ["grao ou legumes", "leite de coco", "curry", "alho", "cebola"], 35, "Facil"],
+  ["Veganas", ["Tofu grelhado", "Tofu xadrez", "Tofu com legumes"], ["tofu", "shoyu", "legumes", "alho", "gengibre"], 30, "Facil"],
+  ["Veganas", ["Falafel assado", "Quibe vegano", "Tabule reforcado"], ["grao-de-bico ou trigo", "ervas", "cebola", "limao", "azeite"], 45, "Medio"],
+  ["Veganas", ["Berinjela recheada vegana", "Abobrinha recheada vegana", "Cogumelos recheados"], ["vegetal base", "recheio vegetal", "tomate", "ervas", "azeite"], 45, "Medio"],
+  ["Veganas", ["Lasanha vegana", "Panqueca vegana", "Pizza vegana"], ["massa", "molho de tomate", "legumes", "queijo vegetal", "ervas"], 55, "Medio"],
+  ["Veganas", ["Feijoada vegana", "Arroz com lentilha", "Escondidinho vegano"], ["leguminosas", "legumes", "alho", "cebola", "temperos"], 50, "Medio"],
+  ["Veganas", ["Salpicao vegano", "Maionese de batata vegana", "Bowl vegano colorido"], ["legumes", "proteina vegetal", "molho vegano", "ervas", "azeite"], 30, "Facil"],
+  ["Fitness", ["Frango com batata-doce", "Bowl proteico", "Omelete fit"], ["proteina", "carboidrato", "legumes", "azeite", "temperos"], 30, "Facil"],
+  ["Fitness", ["Crepioca", "Panqueca proteica", "Muffin de aveia"], ["ovo", "aveia ou tapioca", "proteina", "sal ou canela", "recheio"], 18, "Facil"],
+  ["Fitness", ["Salada com quinoa", "Peixe com legumes", "Carne magra com abobrinha"], ["proteina magra", "graos", "legumes", "limao", "ervas"], 35, "Facil"],
+  ["Bebidas", ["Suco verde", "Vitamina de banana", "Smoothie de frutas"], ["fruta", "liquido", "gelo", "adoce se quiser", "sementes"], 8, "Facil"],
+  ["Bebidas", ["Cafe cremoso", "Chocolate quente", "Cha gelado"], ["bebida base", "leite ou agua", "acucar", "especiarias", "gelo se quiser"], 12, "Facil"],
+  ["Bebidas", ["Limonada suica", "Agua saborizada", "Drink sem alcool"], ["fruta", "agua", "gelo", "hortela", "acucar"], 10, "Facil"],
+  ["Brasileiras", ["Feijoada simples", "Moqueca baiana", "Galinhada"], ["proteina", "arroz ou feijao", "alho", "cebola", "temperos brasileiros"], 70, "Medio"],
+  ["Brasileiras", ["Pao de queijo mineiro", "Coxinha de frango", "Bolinho de chuva"], ["massa base", "recheio ou queijo", "ovos", "oleo", "sal"], 60, "Medio"],
+  ["Brasileiras", ["Farofa crocante", "Vinagrete", "Mandioca cozida"], ["ingrediente principal", "cebola", "cheiro-verde", "sal", "azeite"], 25, "Facil"],
+  ["Internacionais", ["Spaghetti carbonara", "Nhoque ao sugo", "Ravioli simples"], ["massa", "molho", "queijo", "sal", "ervas"], 40, "Medio"],
+  ["Internacionais", ["Taco mexicano", "Chili com carne", "Guacamole"], ["tortilha ou feijao", "proteina", "tomate", "temperos", "limao"], 35, "Facil"],
+  ["Internacionais", ["Yakissoba", "Frango xadrez", "Arroz frito"], ["macarrao ou arroz", "legumes", "proteina", "shoyu", "oleo"], 35, "Facil"],
+  ["Internacionais", ["Homus", "Kibe de forno", "Tabule"], ["grao ou trigo", "ervas", "limao", "azeite", "temperos"], 40, "Facil"],
+  ["Infantis", ["Mini pizza", "Nuggets caseiro", "Macarrao colorido"], ["base simples", "proteina", "molho", "queijo", "legumes"], 30, "Facil"],
+  ["Infantis", ["Bolinho de arroz", "Panqueca colorida", "Hamburguinho caseiro"], ["arroz ou massa", "ovo", "legumes", "farinha", "temperos suaves"], 30, "Facil"],
+  ["Infantis", ["Geladinho de fruta", "Biscoito simples", "Danoninho caseiro"], ["fruta", "leite ou iogurte", "acucar", "baunilha", "recipiente"], 20, "Facil"],
+  ["Datas especiais", ["Peru assado simples", "Tender com abacaxi", "Arroz natalino"], ["proteina ou arroz", "frutas", "ervas", "manteiga", "sal"], 90, "Medio"],
+  ["Datas especiais", ["Bacalhau de forno", "Salpicao", "Farofa de festa"], ["ingrediente principal", "legumes", "azeite", "cebola", "ervas"], 60, "Medio"],
+  ["Datas especiais", ["Rabanada", "Ovo de Pascoa de colher", "Pave classico"], ["base doce", "leite", "chocolate ou creme", "acucar", "decoracao"], 50, "Facil"],
+  ["Jantar", ["Hamburguer artesanal", "Hot dog completo", "Batata recheada"], ["pao ou batata", "proteina", "queijo", "molho", "complementos"], 35, "Facil"],
+  ["Datas especiais", ["Jantar do Dia dos Namorados", "Risoto do Dia dos Namorados", "Sobremesa do Dia dos Namorados"], ["massa ou arroz", "molho especial", "queijo", "ervas", "chocolate ou fruta"], 45, "Medio"],
+  ["Datas especiais", ["Almoco de Dia das Maes", "Bolo de Dia das Maes", "Cafe especial de Dia das Maes"], ["proteina principal", "arroz ou massa", "legumes", "creme", "decoracao"], 60, "Medio"],
+  ["Datas especiais", ["Churrasco de Dia dos Pais", "Costela de Dia dos Pais", "Petiscos de Dia dos Pais"], ["carne", "sal grosso", "molho", "farofa", "vinagrete"], 70, "Medio"],
+  ["Datas especiais", ["Bacalhau de Pascoa", "Arroz de Pascoa", "Ovo de Pascoa trufado"], ["peixe ou chocolate", "azeite", "batata", "creme", "decoracao"], 65, "Medio"],
+  ["Datas especiais", ["Ceia de Natal simples", "Peru de Natal", "Sobremesa de Natal"], ["proteina natalina", "frutas secas", "ervas", "manteiga", "creme"], 90, "Medio"],
+  ["Datas especiais", ["Lentilha de Ano Novo", "Arroz de Ano Novo", "Drink sem alcool de Ano Novo"], ["lentilha ou arroz", "ervas", "frutas", "gelo", "tempero"], 40, "Facil"],
+  ["Datas especiais", ["Canjica de Festa Junina", "Pamonha de Festa Junina", "Bolo de milho de Festa Junina"], ["milho", "leite", "acucar", "canela", "manteiga"], 55, "Facil"],
+  ["Datas especiais", ["Feijoada de Carnaval", "Sanduiche de Carnaval", "Suco refrescante de Carnaval"], ["feijao ou pao", "proteina", "frutas", "gelo", "temperos"], 45, "Facil"],
+  ["Datas especiais", ["Bolo de aniversario", "Salgadinhos de aniversario", "Docinhos de aniversario"], ["farinha ou massa", "recheio", "cobertura", "granulado", "forminhas"], 65, "Medio"],
+  ["Datas especiais", ["Doces de Halloween", "Cupcake de Halloween", "Bebida de Halloween"], ["chocolate", "corante", "fruta", "creme", "decoracao"], 45, "Facil"]
+];
+
+const allRecipes = recipeFamilies.flatMap(([category, titles, ingredients, time, level], familyIndex) =>
+  titles.map((title, titleIndex) => ({
+    id: `r-${familyIndex}-${titleIndex}`,
+    title,
+    category,
+    description: `${title} com preparo simples, ingredientes faceis de encontrar e passo a passo direto.`,
+    time: `${time + titleIndex * 5} min`,
+    timeMinutes: time + titleIndex * 5,
+    level,
+    servings: titleIndex === 2 ? "4 porcoes" : "2 a 4 porcoes",
+    image: getImageForRecipe(title, category),
+    ingredients,
+    steps: [
+      "Separe os ingredientes e deixe tudo medido antes de comecar.",
+      "Prepare a base da receita em fogo medio ou forno preaquecido, conforme o prato pedir.",
+      "Adicione os temperos aos poucos e prove para ajustar sal, textura e sabor.",
+      "Finalize quando estiver cozido, dourado ou cremoso, e sirva ainda fresco."
+    ]
+  }))
+);
+
+const recipeLimits = {
+  "Cafe da manha": 12,
+  "Almoco": 14,
+  "Jantar": 14,
+  "Doces": 14,
+  "Veganas": 12,
+  "Rapidas": 10,
+  "Fitness": 6,
+  "Bebidas": 6,
+  "Brasileiras": 4,
+  "Internacionais": 4,
+  "Infantis": 2,
+  "Datas especiais": 2
+};
+
+const recipes = Object.entries(recipeLimits).flatMap(([category, limit]) =>
+  allRecipes.filter((recipe) => recipe.category === category).slice(0, limit)
+);
+
+const categoryGrid = document.querySelector("#categoryGrid");
+const recipeGrid = document.querySelector("#recipeGrid");
+const filters = document.querySelectorAll(".filter");
+const searchForm = document.querySelector("#searchForm");
+const searchInput = document.querySelector("#searchInput");
+const timeFilter = document.querySelector("#timeFilter");
+const levelFilter = document.querySelector("#levelFilter");
+const recipeCount = document.querySelector("#recipeCount");
+const favoritesList = document.querySelector("#favoritesList");
+const carouselTrack = document.querySelector("#carouselTrack");
+const carouselPrev = document.querySelector("#carouselPrev");
+const carouselNext = document.querySelector("#carouselNext");
+const clearTopic = document.querySelector("#clearTopic");
+const detail = document.querySelector("#recipeDetail");
+const closeDetail = document.querySelector("#closeDetail");
+const dailyButton = document.querySelector("#dailyButton");
+
+let activeFilter = "Todas";
+let searchTerm = "";
+let activeTopic = "";
+let activeTopicTerms = [];
+let activeTime = "Todos";
+let activeLevel = "Todas";
+let favorites = JSON.parse(localStorage.getItem("portalReceitasFaceisFavoritas") || "[]");
+let dailyRecipe = recipes[0];
+
+function renderCategories() {
+  categoryGrid.innerHTML = categories
+    .map(([name, text, examples]) => `
+      <article class="category-card">
+        <button class="category-title-button" type="button" data-category="${name}">${name}</button>
+        <span>${text}</span>
+        <div class="category-actions">
+          ${examples.map((example) => `<button type="button" data-category="${name}" data-topic="${example}">${example}</button>`).join("")}
+        </div>
+      </article>
+    `)
+    .join("");
+
+  categoryGrid.querySelectorAll("[data-category]").forEach((button) => {
+    button.addEventListener("click", () => {
+      applyCategorySearch(button.dataset.category, button.dataset.topic || "");
+    });
+  });
+}
+
+function applyCategorySearch(category, topic) {
+  activeFilter = category;
+  activeTopic = topic;
+  activeTopicTerms = topic ? getTopicTerms(topic) : [];
+  searchTerm = "";
+  searchInput.value = topic;
+  filters.forEach((item) => item.classList.toggle("active", item.dataset.filter === category));
+  categoryGrid.querySelectorAll("[data-topic]").forEach((item) => item.classList.toggle("active", item.dataset.topic === topic));
+  renderRecipes();
+  document.querySelector("#receitas").scrollIntoView({ behavior: "smooth" });
+}
+
+function getTopicTerms(topic) {
+  return (topicAliases[topic] || [topic]).map((term) => term.toLowerCase());
+}
+
+function renderDailyRecipe() {
+  const today = new Date();
+  const startOfYear = new Date(today.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor((today - startOfYear) / 86400000);
+  dailyRecipe = recipes[dayOfYear % recipes.length];
+  document.querySelector("#dailyImage").src = dailyRecipe.image;
+  document.querySelector("#dailyImage").alt = dailyRecipe.title;
+  document.querySelector("#dailyImage").onerror = () => {
+    document.querySelector("#dailyImage").src = imageByCategory[dailyRecipe.category];
+  };
+  document.querySelector("#spotlight-title").textContent = dailyRecipe.title;
+  document.querySelector("#dailyDescription").textContent = dailyRecipe.description;
+  document.querySelector("#dailyMeta").textContent = `${dailyRecipe.time} | ${dailyRecipe.level}`;
+}
+
+function renderCarousel() {
+  const featuredRecipes = recipes.filter((recipe, index) => index % 9 === 0).slice(0, 16);
+  carouselTrack.innerHTML = featuredRecipes.map((recipe) => `
+    <button class="carousel-item" type="button" data-carousel-recipe="${recipe.id}">
+      <img src="${recipe.image}" alt="${recipe.title}" onerror="this.src='${imageByCategory[recipe.category]}'">
+      <span class="carousel-caption">
+        <strong>${recipe.title}</strong>
+        <span>${recipe.category} | ${recipe.time}</span>
+      </span>
+    </button>
+  `).join("");
+
+  carouselTrack.querySelectorAll("[data-carousel-recipe]").forEach((button) => {
+    button.addEventListener("click", () => openRecipe(recipes.find((recipe) => recipe.id === button.dataset.carouselRecipe)));
+  });
+}
+
+function renderRecipes() {
+  const normalizedTerm = searchTerm.trim().toLowerCase();
+  const visibleRecipes = recipes.filter((recipe) => {
+    const matchesFilter = activeFilter === "Todas" || recipe.category === activeFilter;
+    const matchesTime =
+      activeTime === "Todos" ||
+      (activeTime === "Rapido" && recipe.timeMinutes <= 25) ||
+      (activeTime === "Medio" && recipe.timeMinutes <= 45) ||
+      (activeTime === "Longo" && recipe.timeMinutes > 45);
+    const matchesLevel = activeLevel === "Todas" || recipe.level === activeLevel;
+    const content = `${recipe.title} ${recipe.category} ${recipe.description} ${recipe.ingredients.join(" ")}`.toLowerCase();
+    const matchesSearch = !normalizedTerm || content.includes(normalizedTerm);
+    const matchesTopic = activeTopicTerms.length === 0 || activeTopicTerms.some((term) => content.includes(term));
+    return matchesFilter && matchesTime && matchesLevel && matchesSearch && matchesTopic;
+  });
+
+  recipeCount.textContent = `${visibleRecipes.length} receita${visibleRecipes.length === 1 ? "" : "s"} encontrada${visibleRecipes.length === 1 ? "" : "s"}${activeTopic ? ` em ${activeTopic}` : ""}`;
+
+  recipeGrid.innerHTML = visibleRecipes.length
+    ? visibleRecipes.map((recipe) => `
+      <article class="recipe-card">
+        <img src="${recipe.image}" alt="${recipe.title}" onerror="this.src='${imageByCategory[recipe.category]}'">
+        <div class="recipe-card-content">
+          <p class="eyebrow">${recipe.category}</p>
+          <h3>${recipe.title}</h3>
+          <p>${recipe.description}</p>
+          <div class="meta">
+            <span>${recipe.time}</span>
+            <span>${recipe.level}</span>
+            <span>${recipe.servings}</span>
+          </div>
+          <div class="card-actions">
+            <button type="button" data-recipe="${recipe.id}">Ver receita</button>
+            <button class="favorite-button ${favorites.includes(recipe.id) ? "active" : ""}" type="button" data-favorite="${recipe.id}">
+              ${favorites.includes(recipe.id) ? "Favorita" : "Favoritar"}
+            </button>
+          </div>
+        </div>
+      </article>
+    `).join("")
+    : `<p class="empty">Nenhuma receita encontrada. Tente outro termo ou categoria.</p>`;
+
+  recipeGrid.querySelectorAll("[data-recipe]").forEach((button) => {
+    button.addEventListener("click", () => openRecipe(recipes.find((recipe) => recipe.id === button.dataset.recipe)));
+  });
+
+  recipeGrid.querySelectorAll("[data-favorite]").forEach((button) => {
+    button.addEventListener("click", () => toggleFavorite(button.dataset.favorite));
+  });
+}
+
+function renderFavorites() {
+  const favoriteRecipes = recipes.filter((recipe) => favorites.includes(recipe.id));
+  favoritesList.innerHTML = favoriteRecipes.length
+    ? favoriteRecipes.map((recipe) => `
+      <article class="favorite-item">
+        <strong>${recipe.title}</strong>
+        <span>${recipe.category} | ${recipe.time} | ${recipe.level}</span>
+      </article>
+    `).join("")
+    : `<p class="empty">Suas receitas favoritas vao aparecer aqui.</p>`;
+}
+
+function openRecipe(recipe) {
+  if (!recipe) return;
+  document.querySelector("#detailImage").src = recipe.image;
+  document.querySelector("#detailImage").alt = recipe.title;
+  document.querySelector("#detailImage").onerror = () => {
+    document.querySelector("#detailImage").src = imageByCategory[recipe.category];
+  };
+  document.querySelector("#detailCategory").textContent = recipe.category;
+  document.querySelector("#detailTitle").textContent = recipe.title;
+  document.querySelector("#detailDescription").textContent = recipe.description;
+  document.querySelector("#detailTime").textContent = recipe.time;
+  document.querySelector("#detailLevel").textContent = recipe.level;
+  document.querySelector("#detailServings").textContent = recipe.servings;
+  document.querySelector("#detailIngredients").innerHTML = recipe.ingredients.map((item) => `<li>${item}</li>`).join("");
+  document.querySelector("#detailSteps").innerHTML = recipe.steps.map((step) => `<li>${step}</li>`).join("");
+  detail.classList.add("open");
+}
+
+function toggleFavorite(id) {
+  favorites = favorites.includes(id) ? favorites.filter((favorite) => favorite !== id) : [...favorites, id];
+  localStorage.setItem("portalReceitasFaceisFavoritas", JSON.stringify(favorites));
+  renderRecipes();
+  renderFavorites();
+}
+
+filters.forEach((button) => {
+  button.addEventListener("click", () => {
+    filters.forEach((item) => item.classList.remove("active"));
+    button.classList.add("active");
+    activeFilter = button.dataset.filter;
+    activeTopic = "";
+    activeTopicTerms = [];
+    categoryGrid.querySelectorAll("[data-topic]").forEach((item) => item.classList.remove("active"));
+    renderRecipes();
+  });
+});
+
+searchForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  searchTerm = searchInput.value;
+  renderRecipes();
+  document.querySelector("#receitas").scrollIntoView({ behavior: "smooth" });
+});
+
+searchInput.addEventListener("input", () => {
+  searchTerm = searchInput.value;
+  activeTopic = "";
+  activeTopicTerms = [];
+  categoryGrid.querySelectorAll("[data-topic]").forEach((item) => item.classList.remove("active"));
+  renderRecipes();
+});
+
+timeFilter.addEventListener("change", () => {
+  activeTime = timeFilter.value;
+  renderRecipes();
+});
+
+levelFilter.addEventListener("change", () => {
+  activeLevel = levelFilter.value;
+  renderRecipes();
+});
+
+clearTopic.addEventListener("click", () => {
+  activeTopic = "";
+  activeTopicTerms = [];
+  searchTerm = "";
+  searchInput.value = "";
+  categoryGrid.querySelectorAll("[data-topic]").forEach((item) => item.classList.remove("active"));
+  renderRecipes();
+});
+
+dailyButton.addEventListener("click", () => openRecipe(dailyRecipe));
+carouselPrev.addEventListener("click", () => carouselTrack.scrollBy({ left: -360, behavior: "smooth" }));
+carouselNext.addEventListener("click", () => carouselTrack.scrollBy({ left: 360, behavior: "smooth" }));
+closeDetail.addEventListener("click", () => detail.classList.remove("open"));
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") detail.classList.remove("open");
+});
+
+document.querySelector("#totalRecipes").textContent = recipes.length;
+renderCategories();
+renderDailyRecipe();
+renderCarousel();
+renderRecipes();
+renderFavorites();
+
+</script>
+  </body>
+</html>
+

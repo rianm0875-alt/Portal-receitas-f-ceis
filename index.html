@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Portal receitas faceis</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Portal receitas faceis inicio">
+        <span class="brand-mark">P</span>
+        <span>Portal receitas faceis</span>
+      </a>
+      <nav class="nav" aria-label="Navegacao principal">
+        <a href="#receitas">Receitas</a>
+        <a href="#categorias">Categorias</a>
+        <a href="#favoritas">Favoritas</a>
+        <a href="#enviar">Enviar receita</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Do cafe da manha ao jantar especial</p>
+          <h1 id="hero-title">Todas as receitas em um lugar so.</h1>
+          <p>Encontre pratos doces, salgados, rapidos, saudaveis, veganos, brasileiros e receitas para datas especiais.</p>
+          <form class="search-panel" id="searchForm" role="search">
+            <label for="searchInput">Buscar receita</label>
+            <div class="search-row">
+              <input id="searchInput" type="search" placeholder="Ex.: bolo, massa, frango, vegano">
+              <button type="submit">Buscar</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section class="stats" aria-label="Resumo do site">
+        <div><strong id="totalRecipes">150</strong><span>receitas no acervo</span></div>
+        <div><strong>12</strong><span>categorias principais</span></div>
+        <div><strong>15 min</strong><span>receitas rapidas</span></div>
+      </section>
+
+      <section class="section spotlight-section" aria-labelledby="spotlight-title">
+        <div class="spotlight-card">
+          <img id="dailyImage" src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1000&q=85" alt="">
+          <div class="spotlight-copy">
+            <p class="eyebrow">Receita do dia</p>
+            <h2 id="spotlight-title">Receita especial de hoje</h2>
+            <p id="dailyDescription">Todo dia uma receita diferente aparece aqui automaticamente.</p>
+            <div class="spotlight-actions">
+              <button id="dailyButton" type="button">Ver receita de hoje</button>
+              <span id="dailyMeta">Atualiza sozinha</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section carousel-section" aria-labelledby="carousel-title">
+        <div class="section-heading">
+          <p class="eyebrow">Galeria</p>
+          <h2 id="carousel-title">Pratos para explorar</h2>
+        </div>
+        <div class="carousel-shell">
+          <button class="carousel-control" id="carouselPrev" type="button" aria-label="Imagem anterior">&lsaquo;</button>
+          <div class="carousel-track" id="carouselTrack" tabindex="0" aria-label="Carrossel de receitas"></div>
+          <button class="carousel-control" id="carouselNext" type="button" aria-label="Proxima imagem">&rsaquo;</button>
+        </div>
+      </section>
+
+      <section class="section" id="categorias" aria-labelledby="category-title">
+        <div class="section-heading">
+          <p class="eyebrow">Organizacao</p>
+          <h2 id="category-title">Tipos de receitas</h2>
+        </div>
+        <div class="category-grid" id="categoryGrid"></div>
+      </section>
+
+      <section class="section recipes-section" id="receitas" aria-labelledby="recipes-title">
+        <div class="section-heading">
+          <p class="eyebrow">Catalogo</p>
+          <h2 id="recipes-title">Receitas em destaque</h2>
+        </div>
+        <div class="toolbar" aria-label="Filtros de receitas">
+          <button class="filter active" data-filter="Todas" type="button">Todas</button>
+          <button class="filter" data-filter="Cafe da manha" type="button">Cafe</button>
+          <button class="filter" data-filter="Almoco" type="button">Almoco</button>
+          <button class="filter" data-filter="Jantar" type="button">Jantar</button>
+          <button class="filter" data-filter="Doces" type="button">Doces</button>
+          <button class="filter" data-filter="Veganas" type="button">Veganas</button>
+          <button class="filter" data-filter="Rapidas" type="button">Rapidas</button>
+          <button class="filter" data-filter="Fitness" type="button">Fitness</button>
+          <button class="filter" data-filter="Bebidas" type="button">Bebidas</button>
+          <button class="filter" data-filter="Brasileiras" type="button">Brasileiras</button>
+          <button class="filter" data-filter="Internacionais" type="button">Internacionais</button>
+          <button class="filter" data-filter="Infantis" type="button">Infantis</button>
+          <button class="filter" data-filter="Datas especiais" type="button">Datas especiais</button>
+        </div>
+        <div class="smart-filters" aria-label="Filtros avancados">
+          <label>
+            Tempo
+            <select id="timeFilter">
+              <option value="Todos">Todos</option>
+              <option value="Rapido">Ate 25 min</option>
+              <option value="Medio">Ate 45 min</option>
+              <option value="Longo">Mais elaboradas</option>
+            </select>
+          </label>
+          <label>
+            Dificuldade
+            <select id="levelFilter">
+              <option value="Todas">Todas</option>
+              <option value="Facil">Facil</option>
+              <option value="Medio">Medio</option>
+            </select>
+          </label>
+          <button class="clear-topic" id="clearTopic" type="button">Limpar topico</button>
+          <span id="recipeCount"></span>
+        </div>
+        <div class="recipe-grid" id="recipeGrid"></div>
+      </section>
+
+      <section class="section favorites-section" id="favoritas" aria-labelledby="favorites-title">
+        <div class="section-heading">
+          <p class="eyebrow">Sua selecao</p>
+          <h2 id="favorites-title">Receitas favoritas</h2>
+        </div>
+        <div class="favorites-list" id="favoritesList"></div>
+      </section>
+
+      <section class="section menu-section" aria-labelledby="menu-title">
+        <div class="section-heading">
+          <p class="eyebrow">Inspiracao</p>
+          <h2 id="menu-title">Cardapio sugerido</h2>
+        </div>
+        <div class="menu-grid">
+          <article><span>Segunda</span><strong>Frango grelhado com salada</strong></article>
+          <article><span>Terca</span><strong>Macarrao alho e oleo</strong></article>
+          <article><span>Quarta</span><strong>Moqueca de banana-da-terra</strong></article>
+          <article><span>Quinta</span><strong>Risoto de cogumelos</strong></article>
+          <article><span>Sexta</span><strong>Bolo de chocolate</strong></article>
+        </div>
+      </section>
+
+      <aside class="recipe-detail" id="recipeDetail" aria-live="polite">
+        <button class="close-detail" id="closeDetail" type="button" aria-label="Fechar detalhes">x</button>
+        <img id="detailImage" alt="">
+        <div class="detail-body">
+          <p class="eyebrow" id="detailCategory"></p>
+          <h2 id="detailTitle"></h2>
+          <p id="detailDescription"></p>
+          <div class="detail-meta">
+            <span id="detailTime"></span>
+            <span id="detailLevel"></span>
+            <span id="detailServings"></span>
+          </div>
+          <h3>Ingredientes</h3>
+          <ul id="detailIngredients"></ul>
+          <h3>Modo de preparo</h3>
+          <ol id="detailSteps"></ol>
+        </div>
+      </aside>
+
+      <section class="section submit-section" id="enviar" aria-labelledby="submit-title">
+        <div class="submit-copy">
+          <p class="eyebrow">Comunidade</p>
+          <h2 id="submit-title">Cadastre novas receitas no acervo</h2>
+          <p>A estrutura ja esta pronta para crescer: voce pode adicionar receitas brasileiras, internacionais, fitness, infantis, sobremesas, bebidas e cardapios completos.</p>
+        </div>
+        <form class="submit-form">
+          <label>Nome da receita<input type="text" placeholder="Ex.: Lasanha de domingo"></label>
+          <label>Categoria<select><option>Cafe da manha</option><option>Almoco</option><option>Jantar</option><option>Doces</option><option>Veganas</option><option>Bebidas</option></select></label>
+          <label>Descricao curta<textarea rows="4" placeholder="Conte o que torna essa receita especial"></textarea></label>
+          <button type="button">Salvar rascunho</button>
+        </form>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Portal receitas faceis</span>
+      <span>Um catalogo flexivel para todos os tipos de receitas.</span>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
